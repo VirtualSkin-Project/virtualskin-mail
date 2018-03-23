@@ -24,7 +24,7 @@ class Contact(db.Model):
 
 
 # Save e-mail to database and send to success json
-@app.route('/add', methods=['GET'])
+@app.route('/add', methods=['POST'])
 def add_email():
     if request.method == 'POST':
         email = request.form['email']
@@ -38,7 +38,7 @@ def add_email():
 
 
 # Save e-mail to database and send to success json
-@app.route('/remove', methods=['GET'])
+@app.route('/remove', methods=['POST'])
 def remove_email():
     if request.method == 'POST':
         email = request.form['email']
