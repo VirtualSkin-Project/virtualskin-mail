@@ -1,10 +1,11 @@
 from flask import Flask, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
+CORS(app)
 heroku = Heroku(app)
 db = SQLAlchemy(app)
 
@@ -50,9 +51,9 @@ def remove_email():
     return jsonify({"status": False})
 
 
-@app.route('/', methods=['GET'])
-def remove():
-    return redirect("http://www.google.com")
+@app.route('/')
+def index():
+    return redirect("https://virtualskin-project.github.io")
 
 
 if __name__ == '__main__':
