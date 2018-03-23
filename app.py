@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
 
@@ -22,7 +22,7 @@ class Contact(db.Model):
 
 
 # Save e-mail to database and send to success json
-@app.route('/add', methods=['POST'])
+@app.route('/add', methods=['GET'])
 def add():
     if request.method == 'POST':
         email = request.form['email']
@@ -36,7 +36,7 @@ def add():
 
 
 # Save e-mail to database and send to success json
-@app.route('/remove', methods=['POST'])
+@app.route('/remove', methods=['GET'])
 def remove():
     if request.method == 'POST':
         email = request.form['email']
@@ -47,6 +47,11 @@ def remove():
             db.session.commit()
             return jsonify({"status": True})
     return jsonify({"status": False})
+
+
+@app.route('/', methods=['GET'])
+def remove():
+    return redirect("http://www.google.com")
 
 
 if __name__ == '__main__':
