@@ -50,6 +50,6 @@ def remove():
 
 
 if __name__ == '__main__':
-    db.create_all()
     app.debug = False
     app.run()
+    db.create_all()
