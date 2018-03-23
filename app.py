@@ -23,7 +23,7 @@ class Contact(db.Model):
 
 # Save e-mail to database and send to success json
 @app.route('/add', methods=['GET'])
-def add():
+def add_email():
     if request.method == 'POST':
         email = request.form['email']
         # Check that email does not already exist (not a great query, but works)
@@ -37,7 +37,7 @@ def add():
 
 # Save e-mail to database and send to success json
 @app.route('/remove', methods=['GET'])
-def remove():
+def remove_email():
     if request.method == 'POST':
         email = request.form['email']
         # Check that email does already exist
