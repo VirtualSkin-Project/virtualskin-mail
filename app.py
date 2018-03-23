@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
 
@@ -31,8 +31,8 @@ def add():
             c = Contact(email)
             db.session.add(c)
             db.session.commit()
-            return {"status": True}
-    return {"status": False}
+            return jsonify({"status": True})
+    return jsonify({"status": False})
 
 
 # Save e-mail to database and send to success json
@@ -45,8 +45,8 @@ def remove():
             c = Contact(email)
             db.session.delete(c)
             db.session.commit()
-            return {"status": True}
-    return {"status": False}
+            return jsonify({"status": True})
+    return jsonify({"status": False})
 
 
 if __name__ == '__main__':
