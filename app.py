@@ -51,8 +51,16 @@ def remove_email():
     return jsonify({"status": False})
 
 
-@app.route('/')
-def index():
+@app.route('/<path:path>', methods=[
+        'GET',
+        'HEAD',
+        'POST',
+        'DELETE',
+        'PUT',
+        'PATCH',
+        'OPTIONS'
+    ])
+def index(path):
     return redirect("https://virtualskin-project.github.io")
 
 
