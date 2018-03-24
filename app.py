@@ -51,6 +51,15 @@ def remove_email():
     return jsonify({"status": False})
 
 
+@app.route('/', defaults={'path': ''}, methods=[
+        'GET',
+        'HEAD',
+        'POST',
+        'DELETE',
+        'PUT',
+        'PATCH',
+        'OPTIONS'
+    ])
 @app.route('/<path:path>', methods=[
         'GET',
         'HEAD',
