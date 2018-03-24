@@ -4,7 +4,7 @@ itsdangerous
 Jinja2
 MarkupSafe
 Werkzeug
-psycopg2
+psycopg2-binary
 Flask-SQLAlchemy
 Flask-Heroku
 Flask-CORS
