@@ -8,3 +8,4 @@ psycopg2-binary
 Flask-SQLAlchemy
 Flask-Heroku
 Flask-CORS
+lepl

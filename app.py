@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_heroku import Heroku
 from flask_cors import CORS
+from lepl.apps.rfc3696 import Email
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -27,13 +29,15 @@ class Contact(db.Model):
 @app.route('/add', methods=['POST'])
 def add_email():
     if request.method == 'POST':
+        email_validator = Email()
         email = request.form['email']
-        # Check that email does not already exist (not a great query, but works)
-        if not db.session.query(Contact).filter(Contact.email == email).count():
-            c = Contact(email)
-            db.session.add(c)
-            db.session.commit()
-            return jsonify({"status": True})
+        if email_validator(email):
+            # Check that email does not already exist (not a great query, but works)
+            if not db.session.query(Contact).filter(Contact.email == email).count():
+                c = Contact(email)
+                db.session.add(c)
+                db.session.commit()
+                return jsonify({"status": True})
     return jsonify({"status": False})
 
 
@@ -41,13 +45,15 @@ def add_email():
 @app.route('/remove', methods=['POST'])
 def remove_email():
     if request.method == 'POST':
+        email_validator = Email()
         email = request.form['email']
-        # Check that email does already exist
-        if db.session.query(Contact).filter(Contact.email == email).count():
-            c = Contact(email)
-            db.session.delete(c)
-            db.session.commit()
-            return jsonify({"status": True})
+        if email_validator(email):
+            # Check that email does already exist
+            if db.session.query(Contact).filter(Contact.email == email).count():
+                c = Contact(email)
+                db.session.delete(c)
+                db.session.commit()
+                return jsonify({"status": True})
     return jsonify({"status": False})
 
 
