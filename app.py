@@ -16,13 +16,19 @@ db = SQLAlchemy(app)
 class Contact(db.Model):
     __tablename__ = "contacts"
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
     email = db.Column(db.String(120), unique=True)
+    phone = db.Column(db.String(15), unique=True)
+    msg = db.Column(db.String(500), unique=True)
 
-    def __init__(self, email):
+    def __init__(self, name, email, phone, msg):
+        self.name = name
         self.email = email
+        self.phone = phone
+        self.msg = msg
 
     def __repr__(self):
-        return '<email %r>' % self.email
+        return '<email %r>, <name %r>, <phone %r>, <msg %r>' % self.email % self.name % self.phone % self.msg
 
 
 # Save e-mail to database and send to success json
@@ -30,11 +36,14 @@ class Contact(db.Model):
 def add_email():
     if request.method == 'POST':
         email_validator = Email()
+        name = request.form['name']
         email = request.form['email']
+        phone = request.form['phone']
+        msg = request.form['msg']
         if email_validator(email):
             # Check that email does not already exist (not a great query, but works)
             if not db.session.query(Contact).filter(Contact.email == email).count():
-                c = Contact(email)
+                c = Contact(name, email, phone, msg)
                 db.session.add(c)
                 db.session.commit()
                 return jsonify({"status": True})
@@ -49,8 +58,8 @@ def remove_email():
         email = request.form['email']
         if email_validator(email):
             # Check that email does already exist
-            if db.session.query(Contact).filter(Contact.email == email).count():
-                c = Contact(email)
+            c = db.session.query(Contact).filter(Contact.email == email)
+            if c:
                 db.session.delete(c)
                 db.session.commit()
                 return jsonify({"status": True})
