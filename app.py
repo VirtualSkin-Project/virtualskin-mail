@@ -16,10 +16,10 @@ db = SQLAlchemy(app)
 class Contact(db.Model):
     __tablename__ = "contacts"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
+    name = db.Column(db.String(50))
     email = db.Column(db.String(120), unique=True)
-    phone = db.Column(db.String(15), unique=True)
-    msg = db.Column(db.String(500), unique=True)
+    phone = db.Column(db.String(15))
+    msg = db.Column(db.String(500))
 
     def __init__(self, name, email, phone, msg):
         self.name = name
